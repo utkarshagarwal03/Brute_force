@@ -1,0 +1,22 @@
+const mongoose = require('mongoose');
+
+const symptomLogSchema = new mongoose.Schema({
+  date: { type: Date, default: Date.now },
+  symptoms: [String],
+  medications: [String],
+});
+
+const patientSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  doctor: { type: mongoose.Schema.Types.ObjectId, ref: 'Doctor' },
+  vitals: {
+    temperature: Number,
+    pulse: Number,
+    bloodPressure: String,
+  },
+  symptomLogs: [symptomLogSchema],
+  medications: [String],
+  alerts: [String],
+});
+
+module.exports = mongoose.model('Patient', patientSchema);
